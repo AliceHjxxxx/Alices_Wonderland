@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>面试官：手写一个call、apply、bind之call（一） | Alice&#39;s Wonderland</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/Alices_Wonderland/favicon.ico">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <link rel="preload" href="/Alices_Wonderland/assets/css/0.styles.6749ab5e.css" as="style"><link rel="preload" href="/Alices_Wonderland/assets/js/app.ab87fa8e.js" as="script"><link rel="preload" href="/Alices_Wonderland/assets/js/3.45ee14b4.js" as="script"><link rel="preload" href="/Alices_Wonderland/assets/js/1.dbb6c65b.js" as="script"><link rel="preload" href="/Alices_Wonderland/assets/js/13.21e0eaee.js" as="script"><link rel="prefetch" href="/Alices_Wonderland/assets/js/10.e5f34332.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/11.7ded5247.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/12.b315d50c.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/14.c8beb2c7.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/15.b2d4e979.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/16.aff09089.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/4.45328445.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/5.1f029dea.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/6.460d163b.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/7.88bd6b2e.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/8.048d10cc.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/9.c1a34d28.js">
+    <link rel="stylesheet" href="/Alices_Wonderland/assets/css/0.styles.6749ab5e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>Alice's Wonderland</h3> <p class="description" data-v-59e6cb88></p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>Alice</span>
+          
+        <!---->
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/Alices_Wonderland/" class="home-link router-link-active"><img src="/Alices_Wonderland/logo.png" alt="Alice's Wonderland" class="logo"> <span class="site-name">Alice's Wonderland</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/Alices_Wonderland/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/Alices_Wonderland/docs/personal Introduce/About Me.html" class="nav-link"><i class="iconfont reco-message"></i>
+  About Me
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Alices_Wonderland/categories/Frontend/" class="nav-link"><i class="undefined"></i>
+  Frontend
+</a></li><li class="dropdown-item"><!----> <a href="/Alices_Wonderland/categories/Personal Introduce/" class="nav-link"><i class="undefined"></i>
+  Personal Introduce
+</a></li></ul></div></div><div class="nav-item"><a href="/Alices_Wonderland/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/Alices_Wonderland/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  Timeline
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      Portal
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/AliceHjxxxx" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://space.bilibili.com/24830016" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-bilibili"></i>
+  Bilibili
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/2863559587141511" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-juejin"></i>
+  稀土掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/Alices_Wonderland/avatar.png" alt="author-avatar" class="personal-img" data-v-1fad0c41> <h3 class="name" data-v-1fad0c41>
+    Alice
+  </h3> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>6</h3> <h6 data-v-1fad0c41>Articles</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>3</h3> <h6 data-v-1fad0c41>Tags</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/Alices_Wonderland/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/Alices_Wonderland/docs/personal Introduce/About Me.html" class="nav-link"><i class="iconfont reco-message"></i>
+  About Me
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Alices_Wonderland/categories/Frontend/" class="nav-link"><i class="undefined"></i>
+  Frontend
+</a></li><li class="dropdown-item"><!----> <a href="/Alices_Wonderland/categories/Personal Introduce/" class="nav-link"><i class="undefined"></i>
+  Personal Introduce
+</a></li></ul></div></div><div class="nav-item"><a href="/Alices_Wonderland/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/Alices_Wonderland/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  Timeline
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      Portal
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/AliceHjxxxx" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://space.bilibili.com/24830016" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-bilibili"></i>
+  Bilibili
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/2863559587141511" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-juejin"></i>
+  稀土掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>面试官：手写一个call、apply、bind之call（一）</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>Alice</span>
+          
+        <!---->
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page" style="padding-right:0;"><section style="display:;"><div class="page-title"><h1 class="title">面试官：手写一个call、apply、bind之call（一）</h1> <div data-v-8a445198><i class="iconfont reco-account" data-v-8a445198><span data-v-8a445198>Alice</span></i> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>12/6/2022</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>JavaScript</span></i></div></div> <div class="theme-reco-content content__default"><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dd8efaf047d547b8b0592061f6c7a7e3~tplv-k3u1fbpfcp-watermark.image?" alt="微信图片_20210323172151.jpg"></p> <p>通过上一篇文章我们知道了 this 的指向，以及 call、apply、bind 的作用，简单回顾一下</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>//定义一个对象，对象中挂载一些属性
+let obj = {
+  name: &quot;夹心啊&quot;,
+  age: 18,
+  type: &quot;美女&quot;,
+};
+
+var name = &quot;Alice&quot;;
+
+function foo(num1, num2) {
+  console.log(this.name);
+  console.log(this.age);
+  console.log(this.type);
+  console.log(num1 + num2);
+}
+
+foo.call(obj,1,2)
+
+foo.apply(obj,[1,2])
+
+var newFoo=foo.bind(obj)
+newFoo(1,2)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><p>看看结果</p> <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/76a230a9155c44298fadb087815fc404~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4061437c20d74cddbdd2cff483288ea3~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9c8469ef0bae4f9e9206aacee5179745~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <h3 id="call、apply、bind-的区别"><a href="#call、apply、bind-的区别" class="header-anchor">#</a> call、apply、bind 的区别</h3> <ul><li><p>执行方法：从上面可以看出 call 和 apply 都是使用后直接执行，但是唯独 bind 不会立即给你执行，而是返回一个新的函数，需要你去手动调用</p></li> <li><p>传参方式：call 传参采用一个一个参数列举，apply 则采用数组传参方式，将使用的参数包裹在一个数组内。bind 有两种方式，你可以和 call 一样在调用 bind 的时候直接传参，也可以等 call 返回一个新函数后，调用新函数时向新函数内传参。</p></li></ul> <h3 id="call-实现原理"><a href="#call-实现原理" class="header-anchor">#</a> call 实现原理</h3> <p>前期铺垫做完了，我们已然发现了 call、apply、bind 的作用和区别，那我们先来实现一下 call 吧</p> <ul><li><p>首先我们知道，我们的函数身上并没有 call、apply、bind 这三种方法，所以他们必定是挂载在<strong>函数原型</strong>上的。<em>Function.prototype.myCall</em></p></li> <li><p>同时我们知道他们传进去的第一个必定是一个对象，剩下几个都是参数，但是我们并不知道它会传多少个参数，所以需要将参数做一个切割，将对象和其他参数分别切出来,没有传参数的情况也要考虑到<strong>var args = [...arguments].slice(1)||&quot;&quot;;</strong></p></li> <li><p>最重要的一点来了，实际上，我们为了能让 foo 中的 this 指向 obj，我们还是采用了<strong>隐式绑定规则</strong>，即让 foo 挂载在 obj 内部，让 obj 进行调用！这就是 call 能改变 this 绑定的最终奥义！</p></li></ul> <h3 id="call-的代码"><a href="#call-的代码" class="header-anchor">#</a> call 的代码</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>Function.prototype.myCall = function (context) {
+    //参数用slice切割，将对象后面传入的参数拿出来
+   var args = [...arguments].slice(1);
+   //注意必须将arguments结构一下，它是类数组，不解构无法使用数组身上的api哦
+   ……
+ };
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>接下来我们要思考了，也是最大的难题，我们要如何拿到 foo，让它挂载在 obj 上呢？仔细想想，我们上一篇文章里面讲到了什么？
+this！！我们要使用 call 是不是需要用函数去调用？那么函数中的 this 自然会指向 foo 上下文咯！！所以 this 就相当于我们的 foo 函数了</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>//context是传入的obj
+Function.prototype.myCall = function (context) {
+    //参数用slice切割，将obj拿出来
+   var args = [...arguments].slice(1);
+   //注意必须将arguments结构一下，它是类数组，不解构无法使用数组身上的api哦
+   context['fn'] = this;//this指向调用mycall的函数，将这个函数挂载到对象
+ };
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>到这一步，其实 call 的原理已经差不多了,但 call 还帮我们多做了一步，就是调用改变 this 指向后的函数，返回它的返回结果。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>Function.prototype.myCall = function (context) {
+  var args = [...arguments].slice(1); //参数用slice切割，将obj拿出来
+  context['fn'] = this;//this指向调用mycall的函数，将这个函数挂载到对象
+  const res = context['fn'](...args);//调用改变this指向后的函数
+  return res;//返回它的返回结果。
+};
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>这样一个 call 方法基本就完成了，让我来试试好不好用</p> <p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d950b1c3096a455baf6ebe90a10c2565~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <p>Yes!!我们成功啦！！</p> <h3 id="代码完善"><a href="#代码完善" class="header-anchor">#</a> 代码完善</h3> <ul><li><h4 id="delete-删除-obj-上多出来的函数"><a href="#delete-删除-obj-上多出来的函数" class="header-anchor">#</a> delete 删除 obj 上多出来的函数</h4></li></ul> <p>但这样的代码并不完美，为什么呢？让我们来看看 obj 上多了点什么</p> <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/089a65a787544404a95d6d78fc9aa455~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <p>你会看到，我们的 obj 上多了一个名叫 foo 的函数，是我们在 myCall 内部给 obj 挂载上去的，但是我们原本的 call 是不会这样的，所以我们还需要多做一步，就是在函数调用完毕后，将刚刚挂载到 obj 的函数删除
+<strong>delete context['fn']</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>Function.prototype.myCall = function (context) {
+  var args = [...arguments].slice(1); //参数用slice切割，将obj拿出来
+  context['fn'] = this;//this指向调用mycall的函数，将这个函数挂载到对象
+  const res = context['fn'](...args);//调用改变this指向后的函数
+  delete context['fn']//将刚刚挂载到obj的函数删除
+  return res;//返回它的返回结果。
+};
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><ul><li><h4 id="不传参会发生什么"><a href="#不传参会发生什么" class="header-anchor">#</a> 不传参会发生什么</h4></li></ul> <p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1b79340274604217a0d499ca4ff550a9~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <p>我们发现不传参 this 就指回全局，但是我们的 myCall 并没有处理这一步，会报错</p> <p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e322071fce747718ed2355ebbcbd3cb~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <p>所以我们需要在使用传入 context（obj）前处理一下，如果没传入 obj 就让它指向 window
+<strong>var context = context || &quot;window&quot;;</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>Function.prototype.myCall = function (context) {
+  var context = context || &quot;window&quot;;//如果没传入obj就让它指向window
+   ……
+};
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><ul><li><h4 id="挂载一个独一无二的-fn"><a href="#挂载一个独一无二的-fn" class="header-anchor">#</a> 挂载一个独一无二的&quot;fn&quot;</h4>
+思考一下万一 obj 里面存在一个与 fn 重名了的函数怎么办呢，我们 myCall 应该去调用执行哪个呢？我们想一想 ES6 里面新增了一个什么数据类型可以帮我们解决这个问题？是不是 Symbol。可以声明一个不被改变的独一无二的 fn。<strong>const fn = Symbol(&quot;fn&quot;)</strong>
+注意这样的话 context[&quot;fn&quot;]里面的引号就要去掉了,因为此时的 fn 是声明的一个变量了，而不是一个名称。</li></ul> <p>想到这三点处理，我们的没有 myCall 就完美做成了</p> <p>以下是 myCall 完整代码</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>Function.prototype.myCall = function (context) {
+  var context = context || &quot;window&quot;;
+  var args = [...arguments].slice(1)||&quot;&quot;;
+  const fn = Symbol(&quot;fn&quot;);
+  context[fn] = this;
+  const res = context[fn](...args);
+  delete context[fn];
+  return res;
+};
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>试一试效果</p> <p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f79ff490b93f4847b0bfceca366b9919~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <p>不错不错，真完美~~</p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:0;" data-v-b57cc07c data-v-7dd95ae2></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="reco-bgm-panel" data-v-b1d3339e><audio id="bgm" src="https://music.163.com/song/media/outer/url?id=1862822901.mp3" data-v-b1d3339e></audio> <div class="reco-float-box" style="bottom:30px;z-index:999999;display:none;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><img src="http://p1.music.126.net/Pdul4HmgspmsiPUq9oKkfQ==/109951166004106688.jpg?param=130y130" data-v-b1d3339e></div> <div class="reco-bgm-box" style="left:10px;bottom:30px;z-index:999999;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="reco-bgm-cover" style="background-image:url(http://p1.music.126.net/Pdul4HmgspmsiPUq9oKkfQ==/109951166004106688.jpg?param=130y130);" data-v-b1d3339e><div class="mini-operation" style="display:none;" data-v-b1d3339e><i class="reco-bgm reco-bgm-pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play" style="display:none;" data-v-b1d3339e></i></div> <div class="falut-message" style="display:none;" data-v-b1d3339e>
+          播放失败
+        </div></div> <div class="reco-bgm-info" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-music music" data-v-b1d3339e></i>Avid</div> <div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-artist" data-v-b1d3339e></i>SawanoHiroyuki[nZk] / 瑞葵(mizuki)</div> <div class="reco-bgm-progress" data-v-b1d3339e><div class="progress-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div> <div class="reco-bgm-operation" data-v-b1d3339e><i class="reco-bgm reco-bgm-last last" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-pause pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play play" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-next next" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-volume1 volume" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-mute mute" style="display:none;" data-v-b1d3339e></i> <div class="volume-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div></div> <div class="reco-bgm-left-box" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><i class="reco-bgm reco-bgm-left" data-v-b1d3339e></i></div></div></div><canvas id="vuepress-canvas-cursor"></canvas></div></div>
+    <script src="/Alices_Wonderland/assets/js/app.ab87fa8e.js" defer></script><script src="/Alices_Wonderland/assets/js/3.45ee14b4.js" defer></script><script src="/Alices_Wonderland/assets/js/1.dbb6c65b.js" defer></script><script src="/Alices_Wonderland/assets/js/13.21e0eaee.js" defer></script>
+  </body>
+</html>

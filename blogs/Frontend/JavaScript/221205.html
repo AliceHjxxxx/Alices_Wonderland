@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>面试官：手写一个call、apply、bind之this铺垫（一） | Alice&#39;s Wonderland</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/Alices_Wonderland/favicon.ico">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <link rel="preload" href="/Alices_Wonderland/assets/css/0.styles.6749ab5e.css" as="style"><link rel="preload" href="/Alices_Wonderland/assets/js/app.ab87fa8e.js" as="script"><link rel="preload" href="/Alices_Wonderland/assets/js/3.45ee14b4.js" as="script"><link rel="preload" href="/Alices_Wonderland/assets/js/1.dbb6c65b.js" as="script"><link rel="preload" href="/Alices_Wonderland/assets/js/12.b315d50c.js" as="script"><link rel="prefetch" href="/Alices_Wonderland/assets/js/10.e5f34332.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/11.7ded5247.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/13.21e0eaee.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/14.c8beb2c7.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/15.b2d4e979.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/16.aff09089.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/4.45328445.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/5.1f029dea.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/6.460d163b.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/7.88bd6b2e.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/8.048d10cc.js"><link rel="prefetch" href="/Alices_Wonderland/assets/js/9.c1a34d28.js">
+    <link rel="stylesheet" href="/Alices_Wonderland/assets/css/0.styles.6749ab5e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>Alice's Wonderland</h3> <p class="description" data-v-59e6cb88></p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>Alice</span>
+          
+        <!---->
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/Alices_Wonderland/" class="home-link router-link-active"><img src="/Alices_Wonderland/logo.png" alt="Alice's Wonderland" class="logo"> <span class="site-name">Alice's Wonderland</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/Alices_Wonderland/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/Alices_Wonderland/docs/personal Introduce/About Me.html" class="nav-link"><i class="iconfont reco-message"></i>
+  About Me
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Alices_Wonderland/categories/Frontend/" class="nav-link"><i class="undefined"></i>
+  Frontend
+</a></li><li class="dropdown-item"><!----> <a href="/Alices_Wonderland/categories/Personal Introduce/" class="nav-link"><i class="undefined"></i>
+  Personal Introduce
+</a></li></ul></div></div><div class="nav-item"><a href="/Alices_Wonderland/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/Alices_Wonderland/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  Timeline
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      Portal
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/AliceHjxxxx" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://space.bilibili.com/24830016" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-bilibili"></i>
+  Bilibili
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/2863559587141511" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-juejin"></i>
+  稀土掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/Alices_Wonderland/avatar.png" alt="author-avatar" class="personal-img" data-v-1fad0c41> <h3 class="name" data-v-1fad0c41>
+    Alice
+  </h3> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>6</h3> <h6 data-v-1fad0c41>Articles</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>3</h3> <h6 data-v-1fad0c41>Tags</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/Alices_Wonderland/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/Alices_Wonderland/docs/personal Introduce/About Me.html" class="nav-link"><i class="iconfont reco-message"></i>
+  About Me
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Alices_Wonderland/categories/Frontend/" class="nav-link"><i class="undefined"></i>
+  Frontend
+</a></li><li class="dropdown-item"><!----> <a href="/Alices_Wonderland/categories/Personal Introduce/" class="nav-link"><i class="undefined"></i>
+  Personal Introduce
+</a></li></ul></div></div><div class="nav-item"><a href="/Alices_Wonderland/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/Alices_Wonderland/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  Timeline
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      Portal
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/AliceHjxxxx" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://space.bilibili.com/24830016" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-bilibili"></i>
+  Bilibili
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/2863559587141511" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-juejin"></i>
+  稀土掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>面试官：手写一个call、apply、bind之this铺垫（一）</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>Alice</span>
+          
+        <!---->
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page" style="padding-right:0;"><section style="display:;"><div class="page-title"><h1 class="title">面试官：手写一个call、apply、bind之this铺垫（一）</h1> <div data-v-8a445198><i class="iconfont reco-account" data-v-8a445198><span data-v-8a445198>Alice</span></i> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>12/5/2022</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>JavaScript</span></i></div></div> <div class="theme-reco-content content__default"><p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a3431c3e9514405cb684028c8a424446~tplv-k3u1fbpfcp-watermark.image?" alt="微信图片_20210323172147.jpg"></p> <p>相信学过前端的大佬们，都知道 call、apply、bind 是干啥的吧？不会吧、不会真的有人不知道吧（手动狗头，阴阳怪气一秒钟)</p> <p>众所周知，这三种方法都是改变我们函数中的 this 指向的，为了唤醒回忆，那我在这里先举三个例子帮大家复习一下</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>//定义一个对象，对象中挂载一些属性
+let obj = {
+  name: &quot;夹心啊&quot;,
+  age: 18,
+  type: &quot;美女&quot;,
+};
+
+var name = &quot;Alice&quot;;
+
+function foo(num1, num2) {
+  console.log(this.name);
+  console.log(this.age);
+  console.log(this.type);
+  console.log(num1 + num2);
+}
+foo(1,2)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>猜猜输出什么？是时候考验一下你的 this 指向有没有学好了！</p> <p>看看结果</p> <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e0aab26b51bb4643b162b14f8f8761ac~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+你答对了吗？？</p> <p>好，我们来分析一下输出结果，首先我们要明白的知识点是 foo 里面 this 指向是什么？好了，可能又有宝子们不太了解，那还能怎么办，继续讲解！</p> <h3 id="this-绑定"><a href="#this-绑定" class="header-anchor">#</a> this 绑定</h3> <h4 id="默认绑定"><a href="#默认绑定" class="header-anchor">#</a> <strong>默认绑定</strong></h4> <ul><li><p>this 所处得词法作用域在哪里生效了，this 就绑定了在哪里</p></li> <li><p>单独使用 this，它指向全局(Global)对象</p></li> <li><p>在严格模式下，全局对象无法进行默认绑定，所以导致 this 只能绑定在 undefined 上</p></li></ul> <h4 id="隐式绑定规则"><a href="#隐式绑定规则" class="header-anchor">#</a> <strong>隐式绑定规则</strong></h4> <ul><li>当函数引用有上下文对象时， 隐式绑定就会把函数调用中的这个 this 绑定到这个上下文对象，即谁调用谁就是爹</li></ul> <h4 id="隐式丢失"><a href="#隐式丢失" class="header-anchor">#</a> <strong>隐式丢失</strong></h4> <ul><li>当隐式绑定的函数丢失了绑定对象，就会应用默认绑定</li></ul> <h4 id="显示绑定规则"><a href="#显示绑定规则" class="header-anchor">#</a> <strong>显示绑定规则</strong></h4> <ul><li>apply bind call 可以强行指定函数的 this 指向</li></ul> <p>所以很显然，上面的 foo 函数是在全局下调用的，命中<strong>默认绑定</strong>，所以它的 this 指向的就是我们全局，而我们全局作用于下只定义了一个 name，却没有 age 和 type，所以当然输出的分别是 Alice、Undefined、Undefined 和传入相加的数字 3 咯。</p> <p>那如果我们在 obj 内挂载一个 foo 属性让它等于外部的 foo 函数,再调用会输出什么呢？</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>obj.foo=foo
+obj.foo(1,2)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/61a823bdfad544fe98b5089f6f2f8230~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+foo 的 this 指向了 obj,这显而易见了，是命中了<strong>隐式绑定规则</strong>谁调用谁是 this 的爹</p> <p>难度升级 👀
+通过上面一番赋值操作，obj 里面应该有个 foo 了且内部逻辑和外部 foo 函数一模一样</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>let obj = {
+  name: &quot;夹心啊&quot;,
+  age: 18,
+  type: &quot;美女&quot;,
+  foo:function(num1, num2) {
+          console.log(this.name);
+          console.log(this.age);
+          console.log(this.type);
+          console.log(num1 + num2);
+    }
+};
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ab65016af19d482ba11d68f95806f4fa~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+是这样毫无疑问吧。</p> <p>那如果我将 obj 中的 foo 再赋给一个变量，调用该变量了呢</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>var test=obj.foo
+//调用foo发生什么？
+test(1,2)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>看看结果
+<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f9b3a2c300414bda99218d3f5ee31409~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <p>嗯？怎么会这样？？？为什么 foo 中的 this 指向了全局？？你现在肯定是满脸黑人问号，这个 foo 不是在 obj 里面吗，为什么还指向了全局？？</p> <p>停停停，咱们的 foo 是在 obj 里面没错，但是宝子，问题来了！你没调用啊！你只是把 foo 这个函数又从 obj 里面拿到了外面在全局下调用了，属于典型的<strong>隐式丢失</strong>了。</p> <p>举个例子，foo 是个手电筒，obj 调用 foo 相当于你晚上在家里把手电筒打开了，手电筒只能照亮你家，照不到外面。但是你出去散步，你把手电筒从家里带出来了，你在外面把手电筒打开，手电筒还能照亮你家吗？当然不能啦！！它现在只能照亮野外的路。</p> <p>那明白了上面几点，那我们使用 call、apply、bind 这样来搞一下，分别输出什么呢？</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>foo.call(obj,1,2)
+
+foo.apply(obj,[1,2])
+
+var newFoo=foo.bind(obj)
+newFoo(1,2)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>看看结果</p> <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/76a230a9155c44298fadb087815fc404~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4061437c20d74cddbdd2cff483288ea3~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9c8469ef0bae4f9e9206aacee5179745~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p> <p>好家伙！谁看了不惊呼一句好家伙，三个都集体输出了 obj 对象的属性，说明 call、apply、bind 这三个方法集体改变了 foo()里面原本的 this 指向，把它强行掰弯到了 obj 的身上了</p> <p>接下来是个小扩展</p> <h3 id="箭头函数中的-this"><a href="#箭头函数中的-this" class="header-anchor">#</a> 箭头函数中的 this</h3> <p><strong>通常来说箭头函数是没有自己的 this 的,它的 this 继承上下文的 this</strong></p> <h4 id="定义在全局作用域下的箭头函数"><a href="#定义在全局作用域下的箭头函数" class="header-anchor">#</a> 定义在全局作用域下的箭头函数</h4> <p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a9574c32bf3547a989fd2100bdc6b3c0~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+毫无疑问依旧输出全局作用域下的 name 即 Alice</p> <h4 id="定义在作用域中的箭头函数"><a href="#定义在作用域中的箭头函数" class="header-anchor">#</a> 定义在作用域中的箭头函数</h4> <p>那如果我在普通函数中定义一个计时器，计数器回调为箭头函数</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>var objfun = function () {
+  this.name = &quot;夹心啊&quot;;
+  this.age = 18;
+  this.type = &quot;美女&quot;;
+  setTimeout(() =&gt; {
+    console.log(this.name);
+  });
+};
+objfun()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>调用 objfun()定时器会输出什么呢</p> <p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8e695946b13c4702a44c0c252fa891ef~tplv-k3u1fbpfcp-watermark.image?" alt="image.png">
+显然箭头函数集成到了 objfun 内部的 this 输出了&quot;夹心啊&quot;</p> <p>讲明白了 this 的原理,下一篇我们来看看如何实现 call、apply、bind 吧</p> <p>[下一篇：面试官：手写一个 call、apply、bind 我瞧瞧之 call（二）]</p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:0;" data-v-b57cc07c data-v-7dd95ae2></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="reco-bgm-panel" data-v-b1d3339e><audio id="bgm" src="https://music.163.com/song/media/outer/url?id=1862822901.mp3" data-v-b1d3339e></audio> <div class="reco-float-box" style="bottom:30px;z-index:999999;display:none;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><img src="http://p1.music.126.net/Pdul4HmgspmsiPUq9oKkfQ==/109951166004106688.jpg?param=130y130" data-v-b1d3339e></div> <div class="reco-bgm-box" style="left:10px;bottom:30px;z-index:999999;" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="reco-bgm-cover" style="background-image:url(http://p1.music.126.net/Pdul4HmgspmsiPUq9oKkfQ==/109951166004106688.jpg?param=130y130);" data-v-b1d3339e><div class="mini-operation" style="display:none;" data-v-b1d3339e><i class="reco-bgm reco-bgm-pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play" style="display:none;" data-v-b1d3339e></i></div> <div class="falut-message" style="display:none;" data-v-b1d3339e>
+          播放失败
+        </div></div> <div class="reco-bgm-info" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-music music" data-v-b1d3339e></i>Avid</div> <div class="info-box" data-v-b1d3339e><i class="reco-bgm reco-bgm-artist" data-v-b1d3339e></i>SawanoHiroyuki[nZk] / 瑞葵(mizuki)</div> <div class="reco-bgm-progress" data-v-b1d3339e><div class="progress-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div> <div class="reco-bgm-operation" data-v-b1d3339e><i class="reco-bgm reco-bgm-last last" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-pause pause" style="display:none;" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-play play" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-next next" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-volume1 volume" data-v-b1d3339e></i> <i class="reco-bgm reco-bgm-mute mute" style="display:none;" data-v-b1d3339e></i> <div class="volume-bar" data-v-b1d3339e><div class="bar" data-v-b1d3339e></div></div></div></div> <div class="reco-bgm-left-box" data-v-b1d3339e data-v-41bcba48 data-v-b1d3339e><i class="reco-bgm reco-bgm-left" data-v-b1d3339e></i></div></div></div><canvas id="vuepress-canvas-cursor"></canvas></div></div>
+    <script src="/Alices_Wonderland/assets/js/app.ab87fa8e.js" defer></script><script src="/Alices_Wonderland/assets/js/3.45ee14b4.js" defer></script><script src="/Alices_Wonderland/assets/js/1.dbb6c65b.js" defer></script><script src="/Alices_Wonderland/assets/js/12.b315d50c.js" defer></script>
+  </body>
+</html>
